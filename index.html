@@ -1,7 +1,7 @@
 <!DOCTYPE html><html lang="en"><head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>gamblenomics</title>
+    <title>GambleGrind</title>
     <link rel="shortcut icon" href="images/G.png" type="image/png">
     <link rel="stylesheet" href="css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;600;700&family=Press+Start+2P&display=swap" rel="stylesheet">
@@ -494,7 +494,7 @@
     <div class="particles" id="particles"></div>
     <div class="container">
       <header>
-        <div class="logo"><img src="images/G.png" alt=""> gamblenomics</div>
+        <div class="logo"><img src="images/G.png" alt=""> GambleGrind</div>
         <div class="header-links">
           <a href="leaderboard.html" class="nav-link"><i class="fas fa-trophy"></i> <span>Leaderboard</span></a>
           <button id="connect-wallet" class="wallet-btn pulse">
@@ -531,7 +531,7 @@
             </div>
             <div class="card-body">
               <div class="winner-info">0 BETS PLACED</div>
-              <div class="winner-amount">0.000000 $G</div>
+              <div class="winner-amount">0.000000 $GG</div>
             </div>
           </div>
         </div>
@@ -551,14 +551,14 @@
             </p>
           </div>
           <button id="place-bet-btn" class="bet-btn pulse">
-            <i class="fas fa-dice"></i> PLACE BET (1000 $G)
+            <i class="fas fa-dice"></i> PLACE BET (1000 $GG)
           </button>
         </div>
       </div>
       <div class="cont">
-        <a href="https://x.com/Gamblenomics"><i class="fab fa-twitter"></i> TWITTER</a>
-        <a style="margin-right: 20px;" href="https://x.com/gamblenomics"><i class="fab fa-twitter"></i> TELEGRAM</a>
-        <a href="https://pump.fun/coin/5sZ3czQrjfyGMUAAZcRwAwsRUpvw5fGSXPJ4KVRmpump?include-nsfw=true"><i class="fas fa-rocket"></i> PUMP.FUN</a>
+        <a href="https://x.com/gamblegrid_sol"><i class="fab fa-twitter"></i> TWITTER</a>
+        <a style="margin-right: 20px;" href="https://x.com/gamblegrid_sol"><i class="fab fa-twitter"></i> TELEGRAM</a>
+        <a href=""><i class="fas fa-rocket"></i> PUMP.FUN</a>
       </div>
       <div class="wallet-modal" id="wallet-modal">
         <div class="modal-content">
@@ -672,7 +672,7 @@
       }
 
       function loadGameState() {
-        const savedState = localStorage.getItem("gamblenomicsState");
+        const savedState = localStorage.getItem("GambleGrindState");
         if (savedState) {
           try {
             const parsedState = JSON.parse(savedState);
@@ -718,7 +718,7 @@
           randomEndTime: gameState.randomEndTime,
         };
 
-        localStorage.setItem("gamblenomicsState", JSON.stringify(stateToSave));
+        localStorage.setItem("GambleGrindState", JSON.stringify(stateToSave));
       }
 
       function startNewRound() {
@@ -812,7 +812,7 @@
           } placed</div>
                     <div class="winner-amount">${totalBank.toFixed(
                       6
-                    )} $G in bank</div>
+                    )} $GG in bank</div>
                 `;
         } else if (gameState.lastWinner) {
           statusElement.querySelector(
@@ -822,7 +822,7 @@
                     <div class="winner-info">${gameState.lastWinner.name}</div>
                     <div class="winner-amount">${totalBank.toFixed(
                       6
-                    )} $G won</div>
+                    )} $GG won</div>
                 `;
         } else {
           statusElement.querySelector(
@@ -830,7 +830,7 @@
           ).innerHTML = `<i class="fas fa-hourglass-start"></i> Round starting soon`;
           statusElement.querySelector(".card-body").innerHTML = `
                     <div class="winner-info">Waiting for players</div>
-                    <div class="winner-amount">0.000000 $G in bank</div>
+                    <div class="winner-amount">0.000000 $GG in bank</div>
                 `;
         }
       }
@@ -882,7 +882,7 @@
                     <div class="bettor-name">${player.name}</div>
                     <div class="bettor-amount">${player.amount.toFixed(
                       6
-                    )} $G</div>
+                    )} $GG</div>
                 `;
           bettorsList.appendChild(bettorItem);
         });
@@ -942,7 +942,7 @@
           btn.innerHTML = `<i class="fas fa-check"></i> Bet Placed!`;
           btn.style.backgroundColor = "var(--success-color)";
           setTimeout(() => {
-            btn.innerHTML = `<i class="fas fa-dice"></i> Place Bet (0.01 $G)`;
+            btn.innerHTML = `<i class="fas fa-dice"></i> Place Bet (0.01 $GG)`;
             btn.style.backgroundColor = "var(--primary-color)";
           }, 2000);
         }
@@ -953,7 +953,7 @@
           "GOI BOSS",
           "Dristamen",
           "CryptoKing",
-          "$G Hunter",
+          "$GG Hunter",
           "Lucky Dog",
         ];
         const emojis = ["💎", "🚀", "🌙", "🔥", "🐋"];
