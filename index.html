@@ -1,0 +1,1056 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>gamblenomics</title>
+    <link rel="shortcut icon" href="images/G.png" type="image/png">
+    <link rel="stylesheet" href="css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;600;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+      :root {
+        --primary-color: #8a2be2; /* Фиолетовый */
+        --secondary-color: #9932cc; /* Темно-фиолетовый */
+        --accent-color: #ffffff; /* Белый */
+        --bg-color: #000000; /* Черный */
+        --card-bg: #1a1a1a; /* Темно-серый */
+        --text-color: #ffffff; /* Белый */
+        --text-light: #cccccc; /* Светло-серый */
+        --border-color: #333333; /* Граница */
+        --danger-color: #ff3860; /* Красный для ошибок */
+        --success-color: #fff; /* Зеленый для успеха */
+        --warning-color: #ffdd57; /* Желтый для предупреждений */
+      }
+
+      body {
+            scale: 0.7;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: "Oxanium", sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    margin-top: -183px;
+      }
+
+      .container {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 0;
+        margin-bottom: 30px;
+        border-bottom: 1px solid var(--border-color);
+      }
+
+      .logo {
+        font-size: 2rem;
+        font-weight: 700;
+        color: var(--primary-color);
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        font-family: "Press Start 2P", cursive;
+      }
+
+      .logo img {
+        width: 50px;
+        height: 50px;
+        object-fit: contain;
+      }
+
+      .header-links {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+      }
+
+      .nav-link {
+        color: var(--text-color);
+        text-decoration: none;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 15px;
+        border-radius: 8px;
+        transition: all 0.3s;
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+      }
+
+      .nav-link:hover {
+        color: var(--accent-color);
+        border-color: var(--primary-color);
+      }
+
+      .wallet-btn {
+        background-color: var(--primary-color);
+        color: white;
+        border: none;
+        padding: 12px 20px;
+        border-radius: 8px;
+        font-weight: 700;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        transition: all 0.3s;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-size: 0.9rem;
+      }
+
+      .wallet-btn:hover {
+        background-color: var(--secondary-color);
+      }
+
+      .game-container {
+        background-color: var(--card-bg);
+        border-radius: 16px;
+        padding: 30px;
+        border: 1px solid var(--border-color);
+      }
+
+      .round-info {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+
+      .round-number {
+        font-size: 1.3rem;
+        color: var(--text-light);
+        margin-bottom: 10px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+      }
+
+      #timer {
+        font-size: 4.5rem;
+        font-weight: 700;
+        color: var(--primary-color);
+        font-family: "Press Start 2P", cursive;
+        margin: 20px 0;
+      }
+
+      #timer.blink {
+        animation: blink 0.8s infinite alternate;
+      }
+
+      @keyframes blink {
+        from {
+          opacity: 1;
+        }
+        to {
+          opacity: 0.5;
+        }
+      }
+
+      .game-panel {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 25px;
+        margin-bottom: 30px;
+      }
+
+      .bank-card,
+      .winner-card {
+        background-color: var(--card-bg);
+        border-radius: 12px;
+        padding: 25px;
+        border: 1px solid var(--border-color);
+        transition: all 0.3s;
+      }
+
+      .bank-card:hover,
+      .winner-card:hover {
+        border-color: var(--primary-color);
+      }
+
+      .card-header {
+        font-size: 1.3rem;
+        font-weight: 600;
+        color: var(--accent-color);
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      .card-body {
+        font-size: 1.6rem;
+      }
+
+      .amount {
+        font-size: 2.8rem;
+        font-weight: 700;
+        color: var(--primary-color);
+        font-family: "Press Start 2P", cursive;
+      }
+
+      .usd-value {
+        font-size: 1.2rem;
+        color: var(--text-light);
+        margin-top: 10px;
+        font-weight: 600;
+      }
+
+      .winner-info {
+        font-weight: 700;
+        margin-bottom: 10px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        color: var(--accent-color);
+        font-size: 1.4rem;
+      }
+
+      .winner-amount {
+        color: var(--success-color);
+        font-weight: 700;
+        font-size: 1.8rem;
+      }
+
+      .bettors-container {
+        margin: 40px 0;
+      }
+
+      .bettors-container h2 {
+        font-size: 1.6rem;
+        margin-bottom: 20px;
+        color: var(--accent-color);
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      #bettors-list {
+        max-height: 350px;
+        overflow-y: auto;
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        background-color: var(--card-bg);
+      }
+
+      #bettors-list::-webkit-scrollbar {
+        width: 8px;
+      }
+
+      #bettors-list::-webkit-scrollbar-track {
+        background: var(--bg-color);
+        border-radius: 10px;
+      }
+
+      #bettors-list::-webkit-scrollbar-thumb {
+        background-color: var(--primary-color);
+        border-radius: 10px;
+      }
+
+      .bettor-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 25px;
+        border-bottom: 1px solid var(--border-color);
+      }
+
+      .bettor-item:last-child {
+        border-bottom: none;
+      }
+
+      .bettor-item:hover {
+        background-color: rgba(138, 43, 226, 0.1);
+      }
+
+      .bettor-name {
+        font-weight: 600;
+        color: var(--text-color);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .bettor-amount {
+        font-weight: 700;
+        color: var(--primary-color);
+        font-family: "Press Start 2P", cursive;
+        font-size: 0.9rem;
+      }
+
+      .action-panel {
+        margin-top: 40px;
+      }
+
+      .info-box {
+        margin-bottom: 30px;
+        background: var(--card-bg);
+        padding: 20px;
+        border-radius: 12px;
+        border: 1px solid var(--border-color);
+      }
+
+      .info-box h3 {
+        font-size: 1.4rem;
+        margin-bottom: 15px;
+        color: var(--accent-color);
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      .info-box p {
+        color: var(--text-light);
+        line-height: 1.6;
+        font-size: 1.1rem;
+      }
+
+      .bet-btn {
+        width: 100%;
+        background-color: var(--primary-color);
+        color: white;
+        border: none;
+        padding: 20px;
+        border-radius: 12px;
+        font-size: 1.3rem;
+        font-weight: 700;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 15px;
+        transition: all 0.3s;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      .bet-btn:hover {
+        background-color: var(--secondary-color);
+      }
+
+      .wallet-modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.9);
+        z-index: 1000;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .modal-content {
+        background-color: var(--card-bg);
+        padding: 40px;
+        border-radius: 16px;
+        width: 100%;
+        max-width: 450px;
+        position: relative;
+        border: 1px solid var(--border-color);
+        text-align: center;
+      }
+
+      .close-modal {
+        position: absolute;
+        top: 20px;
+        right: 25px;
+        font-size: 1.8rem;
+        cursor: pointer;
+        color: var(--text-light);
+        transition: all 0.3s;
+      }
+
+      .close-modal:hover {
+        color: var(--danger-color);
+      }
+
+      .modal-content h2 {
+        font-size: 1.8rem;
+        margin-bottom: 20px;
+        color: var(--accent-color);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      .modal-content p {
+        color: var(--text-light);
+        margin-bottom: 30px;
+        font-size: 1.1rem;
+        line-height: 1.6;
+      }
+
+      .phantom-btn {
+        width: 100%;
+        padding: 18px;
+        background-color: var(--primary-color);
+        color: white;
+        border: none;
+        border-radius: 12px;
+        font-weight: 700;
+        margin-top: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 15px;
+        cursor: pointer;
+        transition: all 0.3s;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-size: 1.1rem;
+      }
+
+      .phantom-btn:hover {
+        background-color: var(--secondary-color);
+      }
+
+      .cont {
+        margin-top: 40px;
+        display: flex;
+        justify-content: center;
+      }
+
+      .cont a:first-child {
+        margin-right: 25px;
+      }
+
+      .cont a {
+        text-decoration: none;
+        width: 180px;
+        background-color: var(--primary-color);
+        color: white;
+        border: none;
+        padding: 18px;
+        border-radius: 12px;
+        font-size: 1.1rem;
+        font-weight: 700;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        transition: all 0.3s;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      .cont a:hover {
+        background-color: var(--secondary-color);
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          padding: 15px;
+        }
+
+        .game-panel {
+          grid-template-columns: 1fr;
+        }
+
+        #timer {
+          font-size: 3rem;
+        }
+
+        .amount {
+          font-size: 2rem;
+        }
+
+        .wallet-btn span,
+        .nav-link span {
+          display: none;
+        }
+
+        .logo {
+          font-size: 1.5rem;
+        }
+
+        .logo img {
+          width: 40px;
+          height: 40px;
+        }
+
+        .cont {
+          flex-direction: column;
+          align-items: center;
+          gap: 15px;
+        }
+
+        .cont a:first-child {
+          margin-right: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="particles" id="particles"></div>
+    <div class="container">
+      <header>
+        <div class="logo"><img src="images/G.png" alt=""> gamblenomics</div>
+        <div class="header-links">
+          <a href="leaderboard.html" class="nav-link"><i class="fas fa-trophy"></i> <span>Leaderboard</span></a>
+          <button id="connect-wallet" class="wallet-btn pulse">
+            <i class="fas fa-wallet"></i>
+            <span id="wallet-text">Connect Wallet</span>
+          </button>
+        </div>
+      </header>
+
+      <div class="game-container">
+        <div class="round-info">
+          <div class="round-number">
+            ROUND #<span id="round-number">1</span>
+          </div>
+          <div class="timer-container">
+            <div id="timer" class="blink">03:00</div>
+          </div>
+        </div>
+
+        <div class="game-panel">
+          <div class="bank-card">
+            <div class="card-header">
+              <i class="fas fa-coins"></i> TOTAL BANK
+            </div>
+            <div class="card-body">
+              <div class="amount" id="total-bank">0.000000</div>
+              <div class="usd-value">≈ $<span id="total-usd">0</span></div>
+            </div>
+          </div>
+
+          <div class="winner-card" id="winner-card">
+            <div class="card-header">
+              <i class="fas fa-hourglass-half"></i> ROUND STATUS
+            </div>
+            <div class="card-body">
+              <div class="winner-info">0 BETS PLACED</div>
+              <div class="winner-amount">0.000000 $G</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="bettors-container">
+          <h2><i class="fas fa-users"></i> RECENT BETS</h2>
+          <div id="bettors-list"></div>
+        </div>
+
+        <div class="action-panel">
+          <div class="info-box">
+            <h3><i class="fas fa-info-circle"></i> HOW IT WORKS?</h3>
+            <p>
+              Each round lasts up to 3 minutes. The round ends randomly. Last
+              better wins the entire bank! Place your bet and cross your
+              fingers!
+            </p>
+          </div>
+          <button id="place-bet-btn" class="bet-btn pulse">
+            <i class="fas fa-dice"></i> PLACE BET (1000 $G)
+          </button>
+        </div>
+      </div>
+      <div class="cont">
+        <a href="https://x.com/Gamblenomics"><i class="fab fa-twitter"></i> TWITTER</a>
+        <a style="margin-right: 20px;" href="https://x.com/gamblenomics"><i class="fab fa-twitter"></i> TELEGRAM</a>
+        <a href="https://pump.fun/coin/5sZ3czQrjfyGMUAAZcRwAwsRUpvw5fGSXPJ4KVRmpump?include-nsfw=true"><i class="fas fa-rocket"></i> PUMP.FUN</a>
+      </div>
+      <div class="wallet-modal" id="wallet-modal">
+        <div class="modal-content">
+          <span class="close-modal">�</span>
+          <h2>CONNECT WALLET</h2>
+          <p>
+            You need to connect a Phantom wallet to play and place bets. Click
+            the button below to connect.
+          </p>
+          <button id="phantom-connect" class="phantom-btn">
+            <svg fill="none" viewBox="0 0 152 30">
+              <title>Logo Phantom</title>
+              <path d="M0 25.219C0 29.105 2.065 30 4.213 30c4.544 0 7.96-3.998 9.997-7.157-.248.698-.386 1.397-.386 2.069 0 1.845 1.047 3.159 3.112 3.159 2.837 0 5.866-2.517 7.436-5.229-.11.392-.165.755-.165 1.09 0 1.287.716 2.098 2.175 2.098 4.6 0 9.226-8.248 9.226-15.462 0-5.62-2.81-10.568-9.86-10.568C13.357 0 0 15.322 0 25.219ZM21.48 9.953c0-1.398.771-2.376 1.9-2.376 1.102 0 1.873.978 1.873 2.376s-.77 2.405-1.872 2.405c-1.13 0-1.9-1.007-1.9-2.405Zm5.894 0c0-1.398.77-2.376 1.9-2.376 1.101 0 1.872.978 1.872 2.376s-.77 2.405-1.872 2.405c-1.13 0-1.9-1.007-1.9-2.405ZM41.115 26.953h4.13v-3.775c0-1.985-.137-2.908-.936-4.725l.44-.224c1.323 3.048 3.278 4.25 5.316 4.25 3.277 0 5.893-2.908 5.893-7.41 0-4.305-2.396-7.464-5.838-7.464-2.038 0-4.048 1.174-5.37 4.222l-.44-.224c.55-1.202.935-2.404.935-3.55h-4.13v18.9Zm4.13-11.911c0-1.845 1.378-3.886 3.415-3.886 1.653 0 3.002 1.37 3.002 3.858 0 2.46-1.294 3.914-3.03 3.914-1.927 0-3.386-1.985-3.386-3.886ZM57.25 22.032h4.132V17.11c0-3.467 1.211-5.927 3.47-5.927 1.431 0 1.872.978 1.872 3.41v7.438h4.131v-8.108c0-4.418-1.57-6.32-4.572-6.32-3.056 0-4.048 2.098-5.232 4.502l-.44-.251c.605-1.51.77-2.46.77-3.803V3.327h-4.13v18.705ZM76.757 22.479c2.617 0 4.186-1.79 5.288-3.914l.468.251c-.44 1.007-.854 2.21-.854 3.216h4.049v-7.605c0-4.53-1.873-6.822-6.252-6.822-4.296 0-6.416 2.18-6.83 4.473l3.966.7c.138-1.203 1.102-2.014 2.644-2.014s2.423.783 2.423 1.734c0 .95-.908 1.398-3.332 1.426-3.58.056-6.224 1.37-6.224 4.166 0 2.292 1.79 4.389 4.654 4.389Zm-.55-4.641c0-2.265 3.442-.671 5.37-2.405v.532c0 1.985-1.763 3.41-3.415 3.41-.936 0-1.955-.39-1.955-1.537ZM87.56 22.032h4.13V17.11c0-3.467 1.212-5.927 3.47-5.927 1.432 0 1.873.978 1.873 3.41v7.438h4.131v-8.108c0-4.418-1.57-6.32-4.572-6.32-3.056 0-4.048 2.098-5.232 4.502l-.44-.251c.605-1.51.77-2.46.77-3.803h-4.13v13.98ZM112.328 22.088V18.62c-.882.307-3.333.838-3.333-1.202v-5.956h3.663v-3.41h-3.663V4.305l-4.158 1.258v2.488h-2.478v3.411h2.478l.028 6.291c0 4.67 4.103 5.34 7.463 4.334ZM120.988 22.479c4.185 0 7.38-3.243 7.38-7.465 0-4.194-3.195-7.41-7.38-7.41-4.186 0-7.408 3.216-7.408 7.41 0 4.222 3.222 7.465 7.408 7.465Zm-3.14-7.437c0-2.32 1.294-3.942 3.14-3.942 1.845 0 3.111 1.621 3.111 3.942 0 2.32-1.266 3.942-3.111 3.942-1.846 0-3.14-1.622-3.14-3.942ZM129.729 22.032h4.13V17.11c0-3.607 1.019-5.927 2.837-5.927 1.184 0 1.68.95 1.68 3.41v7.438h4.131V17.11c0-3.383 1.101-5.927 2.836-5.927 1.157 0 1.68 1.09 1.68 3.41v7.438h4.131v-8.108c0-4.446-1.432-6.32-4.241-6.32-2.919 0-4.076 2.014-4.847 4.446l-.468-.251c.413-1.454.165-2.237-.331-2.852-.716-.895-1.735-1.342-3.029-1.342-2.589 0-3.718 1.845-4.709 4.417l-.441-.28c.468-1.257.771-2.264.771-3.69h-4.13v13.98Z" fill="currentColor"></path>
+            </svg>
+            CONNECT PHANTOM
+          </button>
+          <div class="mock-warning">
+            *This is a demo. No real connection will be made.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        initGame();
+      });
+
+      const gameState = {
+        connected: false,
+        walletAddress: null,
+        currentRound: 0,
+        roundActive: false,
+        roundTimeLeft: 180,
+        roundDuration: 180,
+        timers: {
+          round: null,
+          bots: null,
+          endRound: null,
+        },
+        players: [],
+        lastWinner: null,
+        lastUpdateTime: 76, // Время последнего обновления (timestamp)
+        roundStartTime: 76, // Время начала текущего раунда (timestamp)
+        randomEndTime: 0, // Случайное время окончания раунда (секунды)
+      };
+
+      function initGame() {
+        setupEventListeners();
+        resetGameData();
+
+        // Загружаем состояние игры из localStorage
+        loadGameState();
+
+        // Вычисляем сколько времени прошло с последнего обновления
+        const now = Math.floor(Date.now() / 1000);
+        const timePassed = now - gameState.lastUpdateTime;
+
+        if (gameState.roundActive) {
+          // Вычисляем сколько времени прошло с начала раунда
+          const roundTimePassed =
+            gameState.roundDuration - gameState.roundTimeLeft + timePassed;
+
+          if (roundTimePassed >= gameState.randomEndTime) {
+            // Раунд должен был закончиться
+            endRound();
+
+            // Вычисляем сколько времени прошло после окончания раунда
+            const timeAfterRoundEnd = roundTimePassed - gameState.randomEndTime;
+
+            if (timeAfterRoundEnd >= 5) {
+              // Если прошло больше 5 секунд после конца раунда
+              const newRoundTimePassed = timeAfterRoundEnd - 5;
+              startNewRound();
+
+              if (newRoundTimePassed > 0) {
+                // Обновляем время в новом раунде
+                gameState.roundTimeLeft = Math.max(
+                  0,
+                  gameState.roundDuration - newRoundTimePassed
+                );
+
+                // Пересчитываем время до случайного конца
+                const newRandomEndTime = Math.max(
+                  0,
+                  gameState.randomEndTime - newRoundTimePassed
+                );
+
+                if (newRandomEndTime <= 0) {
+                  endRound();
+                } else {
+                  startRoundTimers(newRandomEndTime);
+                }
+              }
+            } else {
+              // Ждем оставшееся время до нового раунда
+              setTimeout(startNewRound, (5 - timeAfterRoundEnd) * 1000);
+            }
+          } else {
+            // Продолжаем текущий раунд
+            gameState.roundTimeLeft = gameState.roundDuration - roundTimePassed;
+            const remainingEndTime = gameState.randomEndTime - roundTimePassed;
+            startRoundTimers(remainingEndTime);
+          }
+        } else {
+          // Если игра не была активна, начинаем новый раунд
+          startNewRound();
+        }
+
+        updateUI();
+      }
+
+      function loadGameState() {
+        const savedState = localStorage.getItem("gamblenomicsState");
+        if (savedState) {
+          try {
+            const parsedState = JSON.parse(savedState);
+
+            // Восстанавливаем состояние
+            gameState.currentRound =
+              parsedState.currentRound || Math.floor(Math.random() * 1000) + 1;
+            gameState.roundActive = parsedState.roundActive || false;
+            gameState.roundTimeLeft =
+              parsedState.roundTimeLeft || gameState.roundDuration;
+            gameState.lastWinner = parsedState.lastWinner || null;
+            gameState.players = parsedState.players || [];
+            gameState.lastUpdateTime =
+              parsedState.lastUpdateTime || Math.floor(Date.now() / 1000);
+            gameState.roundStartTime =
+              parsedState.roundStartTime || Math.floor(Date.now() / 1000);
+            gameState.randomEndTime =
+              parsedState.randomEndTime || Math.floor(Math.random() * 120) + 60;
+            console.log(gameState.roundStartTime);
+          } catch (e) {
+            console.error("Failed to parse saved game state", e);
+          }
+        } else {
+          // Инициализация нового состояния
+          gameState.currentRound = Math.floor(Math.random() * 1000) + 1;
+          gameState.randomEndTime = Math.floor(Math.random() * 120) + 60;
+          gameState.lastUpdateTime = Math.floor(Date.now() / 1000);
+          gameState.roundStartTime = Math.floor(Date.now() / 1000);
+        }
+      }
+
+      function saveGameState() {
+        gameState.lastUpdateTime = Math.floor(Date.now() / 1000);
+
+        const stateToSave = {
+          currentRound: gameState.currentRound,
+          roundActive: gameState.roundActive,
+          roundTimeLeft: gameState.roundTimeLeft,
+          lastWinner: gameState.lastWinner,
+          players: gameState.players,
+          lastUpdateTime: gameState.lastUpdateTime,
+          roundStartTime: gameState.roundStartTime,
+          randomEndTime: gameState.randomEndTime,
+        };
+
+        localStorage.setItem("gamblenomicsState", JSON.stringify(stateToSave));
+      }
+
+      function startNewRound() {
+        clearAllTimers();
+
+        gameState.roundActive = true;
+        gameState.currentRound = Math.floor(Math.random() * 1000) + 1;
+        gameState.players = [];
+        gameState.roundTimeLeft = gameState.roundDuration;
+        gameState.roundStartTime = Math.floor(Date.now() / 1000);
+        gameState.randomEndTime = Math.floor(Math.random() * 120) + 60;
+
+        updateUI();
+        startRoundTimers(gameState.randomEndTime);
+        saveGameState();
+      }
+
+      function startRoundTimers(timeUntilEnd) {
+        // Основной таймер
+        gameState.timers.round = setInterval(() => {
+          gameState.roundTimeLeft--;
+          updateTimerDisplay();
+
+          if (gameState.roundTimeLeft <= 10) {
+            document.getElementById("timer").classList.add("blink");
+          }
+
+          saveGameState();
+        }, 1000);
+
+        // Таймер случайного окончания
+        gameState.timers.endRound = setTimeout(() => {
+          endRound();
+        }, timeUntilEnd * 1000);
+
+        // Симуляция ставок ботов
+        // simulateBotBets(20 + Math.floor(Math.random() * 10));
+      }
+      function endRound() {
+        clearAllTimers();
+        gameState.roundActive = false;
+
+        const timerElement = document.getElementById("timer");
+        if (timerElement) {
+          timerElement.style.color = "var(--danger-color)";
+          timerElement.classList.add("blink");
+        }
+
+        // Определяем победителя
+        if (gameState.players.length > 0) {
+          gameState.players.sort((a, b) => b.timestamp - a.timestamp);
+          gameState.lastWinner = gameState.players[0];
+        }
+
+        updateUI();
+        saveGameState();
+
+        // Новый раунд через 5 секунд
+        setTimeout(() => {
+          startNewRound();
+        }, 5000);
+      }
+
+      function updateUI() {
+        // Обновляем номер раунда
+        const roundNumberElement = document.getElementById("round-number");
+        if (roundNumberElement) {
+          roundNumberElement.textContent = gameState.currentRound;
+        }
+
+        updateTimerDisplay();
+        updateBank();
+        updateBettorsList();
+        updateGameStatus();
+      }
+
+      function updateGameStatus() {
+        const statusElement = document.getElementById("winner-card");
+        if (!statusElement) return;
+
+        const totalBank = calculateTotalBank();
+        const betsCount = gameState.players.length;
+
+        if (gameState.roundActive) {
+          statusElement.querySelector(
+            ".card-header"
+          ).innerHTML = `<i class="fas fa-hourglass-half"></i> Round in progress`;
+          statusElement.querySelector(".card-body").innerHTML = `
+                    <div class="winner-info">${betsCount} ${
+            betsCount === 1 ? "bet" : "bets"
+          } placed</div>
+                    <div class="winner-amount">${totalBank.toFixed(
+                      6
+                    )} $G in bank</div>
+                `;
+        } else if (gameState.lastWinner) {
+          statusElement.querySelector(
+            ".card-header"
+          ).innerHTML = `<i class="fas fa-crown"></i> Last Winner`;
+          statusElement.querySelector(".card-body").innerHTML = `
+                    <div class="winner-info">${gameState.lastWinner.name}</div>
+                    <div class="winner-amount">${totalBank.toFixed(
+                      6
+                    )} $G won</div>
+                `;
+        } else {
+          statusElement.querySelector(
+            ".card-header"
+          ).innerHTML = `<i class="fas fa-hourglass-start"></i> Round starting soon`;
+          statusElement.querySelector(".card-body").innerHTML = `
+                    <div class="winner-info">Waiting for players</div>
+                    <div class="winner-amount">0.000000 $G in bank</div>
+                `;
+        }
+      }
+
+      function calculateTotalBank() {
+        return gameState.players.reduce(
+          (sum, player) => sum + player.amount,
+          0
+        );
+      }
+
+      function updateTimerDisplay() {
+        const minutes = Math.floor(gameState.roundTimeLeft / 60);
+        const seconds = gameState.roundTimeLeft % 60;
+        const timerElement = document.getElementById("timer");
+        if (timerElement) {
+          timerElement.textContent = `${minutes
+            .toString()
+            .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+        }
+      }
+
+      function updateBank() {
+        const totalBank = calculateTotalBank();
+        const totalBankElement = document.getElementById("total-bank");
+        const totalUsdElement = document.getElementById("total-usd");
+
+        if (totalBankElement)
+          totalBankElement.textContent = totalBank.toFixed(6);
+        if (totalUsdElement)
+          totalUsdElement.textContent = Math.floor(totalBank * 1950);
+      }
+
+      function updateBettorsList() {
+        const bettorsList = document.getElementById("bettors-list");
+        if (!bettorsList) return;
+
+        bettorsList.innerHTML = "";
+
+        // Показываем последние 15 ставок (новые сверху)
+        const recentBettors = [...gameState.players]
+          .sort((a, b) => b.timestamp - a.timestamp)
+          .slice(0, 15);
+
+        recentBettors.forEach((player, index) => {
+          const bettorItem = document.createElement("div");
+          bettorItem.className = "bettor-item";
+          bettorItem.innerHTML = `
+                    <div class="bettor-name">${player.name}</div>
+                    <div class="bettor-amount">${player.amount.toFixed(
+                      6
+                    )} $G</div>
+                `;
+          bettorsList.appendChild(bettorItem);
+        });
+      }
+
+      function simulateBotBets(botCount) {
+        const interval = (gameState.roundDuration * 1000) / botCount;
+
+        gameState.timers.bots = setInterval(() => {
+          if (!gameState.roundActive) {
+            clearInterval(gameState.timers.bots);
+            return;
+          }
+
+          const botName = generateRandomName();
+          const botAmount = 0.01; // Фиксированная ставка
+
+          gameState.players.push({
+            name: botName,
+            address: "Bot" + Math.random().toString(36).substring(2, 8),
+            amount: botAmount,
+            timestamp: Date.now(),
+          });
+
+          updateUI();
+          saveGameState();
+        }, interval);
+      }
+
+      function placeBet() {
+        if (!gameState.connected) {
+          showWalletModal();
+          return;
+        }
+
+        if (!gameState.roundActive) {
+          alert("Please wait for the next round to start!");
+          return;
+        }
+
+        const betAmount = 0.01;
+        const playerName = generateRandomName();
+
+        gameState.players.push({
+          name: playerName,
+          address: gameState.walletAddress,
+          amount: betAmount,
+          timestamp: Date.now(),
+        });
+
+        updateUI();
+        saveGameState();
+
+        // Визуальная обратная связь
+        const btn = document.getElementById("place-bet-btn");
+        if (btn) {
+          btn.innerHTML = `<i class="fas fa-check"></i> Bet Placed!`;
+          btn.style.backgroundColor = "var(--success-color)";
+          setTimeout(() => {
+            btn.innerHTML = `<i class="fas fa-dice"></i> Place Bet (0.01 $G)`;
+            btn.style.backgroundColor = "var(--primary-color)";
+          }, 2000);
+        }
+      }
+
+      function generateRandomName() {
+        const names = [
+          "GOI BOSS",
+          "Dristamen",
+          "CryptoKing",
+          "$G Hunter",
+          "Lucky Dog",
+        ];
+        const emojis = ["💎", "🚀", "🌙", "🔥", "🐋"];
+        return `${names[Math.floor(Math.random() * names.length)]} ${
+          emojis[Math.floor(Math.random() * emojis.length)]
+        }`;
+      }
+
+      function connectPhantom() {
+        gameState.connected = true;
+        gameState.walletAddress =
+          "GmP5" + Math.random().toString(36).substring(2, 8) + "z4Rt";
+
+        const walletText = document.getElementById("wallet-text");
+        if (walletText) {
+          walletText.textContent = `${gameState.walletAddress.substring(
+            0,
+            4
+          )}...${gameState.walletAddress.substring(
+            gameState.walletAddress.length - 4
+          )}`;
+        }
+
+        // Визуальная обратная связь
+        const btn = document.getElementById("connect-wallet");
+        if (btn) {
+          btn.innerHTML = `<i class="fas fa-check-circle"></i> <span id="wallet-text">${walletText.textContent}</span>`;
+          btn.style.backgroundColor = "var(--success-color)";
+
+          // setTimeout(() => {
+          //     btn.innerHTML = `<i class="fas fa-wallet"></i> <span id="wallet-text">${walletText.textContent}</span>`;
+          //     btn.style.backgroundColor = 'var(--primary-color)';
+          // }, 2000);
+        }
+
+        closeModal();
+      }
+
+      function showWalletModal() {
+        const modal = document.getElementById("wallet-modal");
+        if (modal) {
+          modal.style.display = "flex";
+        }
+      }
+
+      function closeModal() {
+        const modal = document.getElementById("wallet-modal");
+        if (modal) {
+          modal.style.display = "none";
+        }
+      }
+
+      function resetGameData() {
+        const totalBankElement = document.getElementById("total-bank");
+        const totalUsdElement = document.getElementById("total-usd");
+
+        if (totalBankElement) totalBankElement.textContent = "0.000000";
+        if (totalUsdElement) totalUsdElement.textContent = "0";
+      }
+
+      function clearAllTimers() {
+        Object.values(gameState.timers).forEach((timer) => {
+          if (timer) {
+            clearInterval(timer);
+            clearTimeout(timer);
+          }
+        });
+      }
+
+      // Сохраняем состояние при закрытии страницы
+      window.addEventListener("beforeunload", () => {
+        saveGameState();
+      });
+
+      function setupEventListeners() {
+        const connectWalletBtn = document.getElementById("connect-wallet");
+        const phantomConnectBtn = document.getElementById("phantom-connect");
+        const placeBetBtn = document.getElementById("place-bet-btn");
+
+        if (connectWalletBtn) {
+          connectWalletBtn.addEventListener("click", showWalletModal);
+        }
+
+        if (phantomConnectBtn) {
+          phantomConnectBtn.addEventListener("click", connectPhantom);
+        }
+
+        // if (placeBetBtn) {
+        //     placeBetBtn.addEventListener('click', placeBet);
+        // }
+
+        const closeModalBtn = document.querySelector(".close-modal");
+        if (closeModalBtn) {
+          closeModalBtn.addEventListener("click", closeModal);
+        }
+      }
+    </script>
+  
+
+</body></html>
